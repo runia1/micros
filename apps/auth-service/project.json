@@ -51,6 +51,30 @@
                 "jestConfig": "apps/auth-service/jest.config.ts",
                 "passWithNoTests": true
             }
+        },
+        "env-up": {
+            "executor": "nx:run-commands",
+            "outputs": [],
+            "options": {
+                "command": "docker-compose up -d",
+                "cwd": "apps/auth-service"
+            }
+        },
+        "env-down": {
+            "executor": "nx:run-commands",
+            "outputs": [],
+            "options": {
+                "command": "docker-compose down",
+                "cwd": "apps/auth-service"
+            }
+        },
+        "migrate-dev": {
+            "executor": "nx:run-commands",
+            "outputs": [],
+            "options": {
+                "command": "prisma migrate dev",
+                "cwd": "apps/auth-service"
+            }
         }
     },
     "tags": []

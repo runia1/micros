@@ -1,0 +1,73 @@
+generator client {
+    provider = "prisma-client-js"
+    // We want to save the generated prisma client local to this app rather than in the default
+    // location which is in node_modules. That way we can have multiple apps in this monorepo
+    // each with their own prisma schema and clients.
+    output   = "../generated/prisma-client"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("CLI_DATABASE_URL")
+}
+
+model User {
+    id           String         @id @default(cuid())
+    active       Boolean        @default(true)
+    createdAt    DateTime       @default(now())
+    updatedAt    DateTime?      @updatedAt
+    email        String         @unique
+    lastName     String
+    firstName    String
+    phone        String?
+    clientId     Int?
+    client       Client?        @relation(fields: [clientId], references: [id])
+    roles        Role[]
+    RefreshToken RefreshToken[]
+}
+
+model Client {
+    id            Int       @id @default(autoincrement())
+    active        Boolean   @default(true)
+    createdAt     DateTime  @default(now())
+    updatedAt     DateTime? @updatedAt
+    name          String
+    masterAdminId Int       @unique
+    users         User[]
+    roles         Role[]
+}
+
+model Role {
+    id          Int       @id @default(autoincrement())
+    active      Boolean   @default(true)
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime? @updatedAt
+    name        String
+    clientId    Int
+    client      Client    @relation(fields: [clientId], references: [id])
+    permissions String[]
+    users       User[]
+}
+
+model RefreshToken {
+    id         String   @id @default(cuid())
+    // jti is the id of the JWT. We store it here so we can determine if
+    // the token & refreshToken belong together. Otherwise the attacker could
+    // send an valid but expired token, and a still valid refreshToken, 
+    // and get back an new token pair.
+    // We should also compare the userId on the token and refreshToken.
+    jti        String   @default(cuid())
+    clientId   Int
+    userId     String
+    user       User     @relation(fields: [userId], references: [id])
+    expiration DateTime
+}
+
+model JWK {
+    kid String @id @default(cuid())
+    // TODO: this is probably not a secure way to store JWKs.  In the spec they
+    // talk about encrypting a JWKSet with a private key which would allow you to only have
+    // one master key that you'd need to bootstrap from somewhere else. We should probably 
+    // do that instead...
+    key Json
+}

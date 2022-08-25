@@ -1,0 +1,41 @@
+version: '3.6'
+services:
+    postgres:
+        image: postgres:14-alpine
+        environment:
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?err}
+        volumes:
+            - postgres-data:/var/lib/postgresql/data
+        ports:
+            - '5431:5432'
+        restart: always
+
+    pgadmin:
+        image: dpage/pgadmin4
+        environment:
+            PGADMIN_DEFAULT_EMAIL: 'pgadmin@micros.io'
+            PGADMIN_DEFAULT_PASSWORD: ${POSTGRES_PASSWORD:?err}
+            PGADMIN_DISABLE_POSTFIX: 'true'
+        ports:
+            - '5051:80'
+        volumes:
+            # per: https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html
+            # This is the working directory in which pgAdmin stores session data, user files,
+            # configuration files, and it’s configuration database. Mapping this directory onto
+            # the host machine gives you an easy way to maintain configuration between invocations
+            # of the container.
+            - pgadmin-data:/var/lib/pgadmin
+            # If this file is mapped, server definitions found in it will be loaded at launch time.
+            # This allows connection information to be pre-loaded into the instance of pgAdmin in
+            # the container. Note that server definitions are only loaded on first launch, i.e. when
+            # the configuration database is created, and not on subsequent launches using the same
+            # configuration database
+            - ./pgadmin-servers.json:/pgadmin4/servers.json
+
+networks:
+    default:
+        name: dev
+
+volumes:
+    postgres-data:
+    pgadmin-data:
