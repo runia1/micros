@@ -8,7 +8,6 @@
         "core-frontend": "apps/core-frontend",
         "core-frontend-e2e": "apps/core-frontend-e2e",
         "core-graphql": "apps/core-graphql",
-        "shared": "libs/shared",
         "ui": "libs/ui"
     }
 }

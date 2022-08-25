@@ -1,5 +1,5 @@
 import { IncomingMessage } from 'node:http';
-import { UnverifiedAuthContext } from '../../../../auth-sdk/src';
+import { UnverifiedAuthContext } from '../authContexts/unverifiedAuthContext';
 
 export function serverAuthExtractor(
     req: IncomingMessage

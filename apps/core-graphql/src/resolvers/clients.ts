@@ -25,7 +25,7 @@ const resolvers = [
         description: 'get the client record belonging to viewer',
         authorize: (root, args, context) =>
             authn(context) && authr(context, Permissions.rOwnClients),
-        resolve(_, __, { prisma, mailer, authContext }) {
+        resolve(_, __, { prisma, authContext }) {
             return prisma.client.findUnique({
                 where: {
                     id: authContext.getClientId(),

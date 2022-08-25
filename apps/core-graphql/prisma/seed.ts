@@ -3,7 +3,7 @@ import prisma from './client';
 async function main() {
     const { id: masterAdminId } = await prisma.user.create({
         data: {
-            email: 'masterAdmin@nextflight.io',
+            email: 'masterAdmin@micros.io',
             firstName: 'Master',
             lastName: 'Admin',
             phone: '+11234567890',
@@ -15,8 +15,7 @@ async function main() {
 
     const { id: clientId } = await prisma.client.create({
         data: {
-            name: 'KickAss Flight School',
-            signupMetadata: { anyData: 1 },
+            name: 'Some Sick Company',
             masterAdminId,
             users: {
                 connect: [{ id: masterAdminId }],

@@ -20,7 +20,6 @@
             "@micros/auth-service-sdk": [
                 "libs/auth-service-sdk/src/index.ts"
             ],
-            "@micros/shared": ["libs/shared/src/index.ts"],
             "@micros/ui": ["libs/ui/src/index.ts"]
         }
     },

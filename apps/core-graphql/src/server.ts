@@ -5,8 +5,6 @@ import {
     ApolloServerPluginLandingPageGraphQLPlayground,
     ApolloServerPluginLandingPageDisabled,
 } from 'apollo-server-core';
-import { registerCustomValidators } from '@micros/shared';
-registerCustomValidators();
 
 const apolloServer = new ApolloServer({
     schema,
