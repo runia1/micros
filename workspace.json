@@ -1,8 +1,14 @@
 {
-  "$schema": "./node_modules/nx/schemas/workspace-schema.json",
-  "version": 2,
-  "projects": {
-    "frontend": "apps/frontend",
-    "frontend-e2e": "apps/frontend-e2e"
-  }
+    "$schema": "./node_modules/nx/schemas/workspace-schema.json",
+    "version": 2,
+    "projects": {
+        "auth-core": "libs/auth-core",
+        "auth-service": "apps/auth-service",
+        "auth-service-sdk": "libs/auth-service-sdk",
+        "core-frontend": "apps/core-frontend",
+        "core-frontend-e2e": "apps/core-frontend-e2e",
+        "core-graphql": "apps/core-graphql",
+        "shared": "libs/shared",
+        "ui": "libs/ui"
+    }
 }

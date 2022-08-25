@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+  // We want to save the generated prisma client local to this app rather than in the default
+  // location which is in node_modules. That way we can have multiple apps in this monorepo
+  // each with their own prisma schema and clients.
+  output   = "../generated/prisma-client"
+}
+
+generator nexusPrisma {
+  provider = "nexus-prisma"
+  // We want to save the generated `nexus-prisma.ts` file local to this app rather than in the default
+  // location which is in node_modules. That way we can have multiple apps in this monorepo
+  // each with their own nexus schema.
+  output   = "../generated/nexus-prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("CLI_DATABASE_URL")
+}
+
+// ################## PRIMARY tables #########################
+
+model User {
+  id        Int       @id @default(autoincrement())
+  active    Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  email     String    @unique
+  lastName  String
+  firstName String
+  phone     String?
+  clientId  Int?
+  client    Client?   @relation(fields: [clientId], references: [id])
+}
+
+model Client {
+  id            Int       @id @default(autoincrement())
+  active        Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime? @updatedAt
+  name          String
+  masterAdminId Int       @unique
+  users         User[]
+}

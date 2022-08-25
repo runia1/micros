@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AuthClient verify() should throw if JWT malformed 1`] = `[JWTInvalid: Invalid JWT]`;
+
+exports[`AuthClient verify() should throw if JWT missing required claims 1`] = `[Error: JWT missing required claims]`;
+
+exports[`AuthClient verify() should throw if ServiceAuth and JWT is expired 1`] = `[Error: JWT expired]`;

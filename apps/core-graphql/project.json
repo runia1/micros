@@ -1,0 +1,94 @@
+{
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "apps/core-graphql/src",
+    "projectType": "application",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/node:webpack",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/apps/core-graphql",
+                "main": "apps/core-graphql/src/server.ts",
+                "tsConfig": "apps/core-graphql/tsconfig.app.json",
+                "webpackConfig": ["apps/core-graphql/webpack.config.js"]
+            },
+            "configurations": {
+                "production": {
+                    "optimization": true,
+                    "extractLicenses": true,
+                    "inspect": false,
+                    "deleteOutputPath": true,
+                    "fileReplacements": [
+                        {
+                            "replace": "apps/core-graphql/src/environments/environment.ts",
+                            "with": "apps/core-graphql/src/environments/environment.prod.ts"
+                        }
+                    ]
+                }
+            }
+        },
+        "serve": {
+            "executor": "@nrwl/node:node",
+            "options": {
+                "buildTarget": "core-graphql:build"
+            },
+            "configurations": {
+                "production": {
+                    "buildTarget": "core-graphql:build:production"
+                }
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["apps/core-graphql/**/*.ts"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/apps/core-graphql"],
+            "options": {
+                "jestConfig": "apps/core-graphql/jest.config.ts",
+                "passWithNoTests": true
+            }
+        },
+        "env-up": {
+            "executor": "nx:run-commands",
+            "outputs": [],
+            "options": {
+                "command": "docker-compose up -d",
+                "cwd": "apps/core-graphql"
+            }
+        },
+        "env-down": {
+            "executor": "nx:run-commands",
+            "outputs": [],
+            "options": {
+                "command": "docker-compose down",
+                "cwd": "apps/core-graphql"
+            }
+        },
+        "migrate-dev": {
+            "executor": "nx:run-commands",
+            "outputs": [],
+            "options": {
+                "command": "prisma migrate dev",
+                "cwd": "apps/core-graphql"
+            }
+        },
+        "codegen": {
+            "executor": "nx:run-commands",
+            "outputs": [],
+            "options": {
+                "parallel": false,
+                "commands": [
+                    "prisma generate",
+                    "ts-node -T --project ./tsconfig.app.json -r tsconfig-paths/register ./src/schema.ts --nexus-exit"
+                ],
+                "cwd": "apps/core-graphql"
+            }
+        }
+    },
+    "tags": []
+}

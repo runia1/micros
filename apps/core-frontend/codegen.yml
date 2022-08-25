@@ -1,0 +1,13 @@
+overwrite: true
+# the schema file should be pulled from the graphql-api generated schema
+schema: '../core-graphql/generated/schema.graphql'
+documents:
+    - './pages/**/*.graphql'
+generates:
+    ./generated/graphql.tsx:
+        plugins:
+            - typescript
+            - typescript-operations
+            - typed-document-node
+            # - typescript-react-apollo
+            # - fragment-matcher

@@ -1,0 +1,70 @@
+{
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "apps/core-frontend",
+    "projectType": "application",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/next:build",
+            "outputs": ["{options.outputPath}"],
+            "defaultConfiguration": "production",
+            "options": {
+                "root": "apps/core-frontend",
+                "outputPath": "dist/apps/core-frontend"
+            },
+            "configurations": {
+                "development": {
+                    "outputPath": "apps/core-frontend"
+                },
+                "production": {}
+            }
+        },
+        "serve": {
+            "executor": "@nrwl/next:server",
+            "defaultConfiguration": "development",
+            "options": {
+                "buildTarget": "core-frontend:build",
+                "dev": true
+            },
+            "configurations": {
+                "development": {
+                    "buildTarget": "core-frontend:build:development",
+                    "dev": true
+                },
+                "production": {
+                    "buildTarget": "core-frontend:build:production",
+                    "dev": false
+                }
+            }
+        },
+        "export": {
+            "executor": "@nrwl/next:export",
+            "options": {
+                "buildTarget": "core-frontend:build:production"
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/apps/core-frontend"],
+            "options": {
+                "jestConfig": "apps/core-frontend/jest.config.ts",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["apps/core-frontend/**/*.{ts,tsx,js,jsx}"]
+            }
+        },
+        "codegen": {
+            "executor": "nx:run-commands",
+            "outputs": [],
+            "options": {
+                "command": "graphql-codegen",
+                "cwd": "apps/core-frontend"
+            }
+        }
+    },
+    "tags": []
+}

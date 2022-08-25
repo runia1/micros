@@ -1,0 +1,20 @@
+{
+    "debug.javascript.defaultRuntimeExecutable": {
+        "pwa-node": "${env:HOME}/.nvm/versions/node/v16.17.0/bin/node"
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "[prisma]": {
+        "editor.defaultFormatter": "Prisma.prisma"
+    }
+    // "emeraldwalk.runonsave": {
+    //     "shell": "/bin/zsh",
+    //     "autoClearConsole": true,
+    //     "commands": [
+    //         {
+    //             "match": "\\.graphql$",
+    //             "cmd": "source ~/.zshrc && npm run codegen"
+    //         }
+    //     ]
+    // }
+}
