@@ -17,9 +17,7 @@
         "esModuleInterop": true,
         "paths": {
             "@micros/auth-core": ["libs/auth-core/src/index.ts"],
-            "@micros/auth-service-sdk": [
-                "libs/auth-service-sdk/src/index.ts"
-            ],
+            "@micros/auth-service-sdk": ["libs/auth-service-sdk/src/index.ts"],
             "@micros/ui": ["libs/ui/src/index.ts"]
         }
     },

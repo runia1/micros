@@ -2,8 +2,8 @@
     "$schema": "./node_modules/nx/schemas/workspace-schema.json",
     "version": 2,
     "projects": {
+        "access-service": "apps/access-service",
         "auth-core": "libs/auth-core",
-        "auth-service": "apps/auth-service",
         "auth-service-sdk": "libs/auth-service-sdk",
         "core-frontend": "apps/core-frontend",
         "core-frontend-e2e": "apps/core-frontend-e2e",
