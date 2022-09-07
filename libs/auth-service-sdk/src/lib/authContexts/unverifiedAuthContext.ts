@@ -1,5 +1,4 @@
 export interface UnverifiedAuthContext {
-    type: 'BrowserAuth' | 'ServiceAuth';
     token: string;
     // Will be available if type is BrowserAuth
     refreshToken?: string;

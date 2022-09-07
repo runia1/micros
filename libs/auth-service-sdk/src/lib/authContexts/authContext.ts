@@ -4,14 +4,18 @@ import { hasNecessaryPermissions } from '@micros/auth-core';
 export class AuthContext {
     constructor(
         private readonly validClaims: ValidClaims,
-        private readonly type: 'BrowserAuth' | 'ServiceAuth',
         private readonly token: string,
         private readonly refreshToken?: string,
         private readonly refreshTokenExpiration?: number
     ) {}
 
     public getType(): 'BrowserAuth' | 'ServiceAuth' {
-        return this.type;
+        switch (this.validClaims.typ) {
+            case 'BA':
+                return 'BrowserAuth';
+            case 'SA':
+                return 'ServiceAuth';
+        }
     }
 
     public getUserId(): string {

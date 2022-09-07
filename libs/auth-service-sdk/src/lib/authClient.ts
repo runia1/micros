@@ -9,6 +9,8 @@ export interface ValidClaims {
     cid: number;
     prm: string[];
     exp: number;
+    typ: 'BA' | 'SA';
+    jit: string;
 }
 
 export class AuthClient {
@@ -34,7 +36,7 @@ export class AuthClient {
         const alreadyExpired = decoded.exp <= now;
         const aboutToExpire = decoded.exp - this.expireBufferSeconds <= now;
 
-        if (unverifiedAuthContext.type === 'ServiceAuth') {
+        if (decoded.typ === 'SA') {
             if (alreadyExpired) {
                 throw new Error('JWT expired');
             }
@@ -44,7 +46,7 @@ export class AuthClient {
                     unverifiedAuthContext
                 );
             }
-        } else if (unverifiedAuthContext.type === 'BrowserAuth') {
+        } else if (decoded.typ === 'BA') {
             // Because BroserAuth has a refreshToken, we can use it to get a new token
             // even if the regular token is already expired.
             if (alreadyExpired || aboutToExpire) {
@@ -71,7 +73,6 @@ export class AuthClient {
 
         return new AuthContext(
             validClaims,
-            unverifiedAuthContext.type,
             unverifiedAuthContext.token,
             unverifiedAuthContext.refreshToken,
             unverifiedAuthContext.refreshTokenExpiration
@@ -90,7 +91,6 @@ export class AuthClient {
         );
 
         return {
-            type: 'BrowserAuth',
             token: response.data.token,
             refreshToken: response.data.refreshToken,
             refreshTokenExpiration: response.data.refreshTokenExpiration,
@@ -108,7 +108,6 @@ export class AuthClient {
         );
 
         return {
-            type: 'ServiceAuth',
             token: response.data.token,
         };
     }

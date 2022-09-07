@@ -52,10 +52,12 @@ model Role {
 model RefreshToken {
     id         String   @id @default(cuid())
     // jti is the id of the JWT. We store it here so we can determine if
-    // the token & refreshToken belong together. Otherwise the attacker could
-    // send an valid but expired token, and a still valid refreshToken, 
+    // the token & refreshToken belong together. Otherwise an attacker could
+    // theoretically send a *valid but expired* token, and a *still valid* refreshToken, 
     // and get back an new token pair.
-    // We should also compare the userId on the token and refreshToken.
+    // We should also compare the userId & clientId on the token and refreshToken.
+    // A combination of these checks should prevent anyone from hijacking someone else's
+    // refreshToken.
     jti        String   @default(cuid())
     clientId   Int
     userId     String
