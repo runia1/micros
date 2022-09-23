@@ -10,7 +10,7 @@ const FirstSectionDiv = styled('div')`
 `;
 
 export default function Home() {
-    useLoggedInRedirect();
+    // useLoggedInRedirect();
 
     return (
         <MarketingContainer>

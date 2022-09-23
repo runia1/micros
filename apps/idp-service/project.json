@@ -1,0 +1,72 @@
+{
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "apps/idp-service/src",
+    "projectType": "application",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/node:webpack",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/apps/idp-service",
+                "main": "apps/idp-service/src/main.ts",
+                "tsConfig": "apps/idp-service/tsconfig.app.json"
+            },
+            "configurations": {
+                "production": {
+                    "optimization": true,
+                    "extractLicenses": true,
+                    "inspect": false,
+                    "fileReplacements": [
+                        {
+                            "replace": "apps/idp-service/src/environments/environment.ts",
+                            "with": "apps/idp-service/src/environments/environment.prod.ts"
+                        }
+                    ]
+                }
+            }
+        },
+        "serve": {
+            "executor": "@nrwl/node:node",
+            "options": {
+                "buildTarget": "idp-service:build"
+            },
+            "configurations": {
+                "production": {
+                    "buildTarget": "idp-service:build:production"
+                }
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["apps/idp-service/**/*.ts"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/apps/idp-service"],
+            "options": {
+                "jestConfig": "apps/idp-service/jest.config.ts",
+                "passWithNoTests": true
+            }
+        },
+        "env-up": {
+            "executor": "nx:run-commands",
+            "outputs": [],
+            "options": {
+                "command": "docker-compose up -d",
+                "cwd": "apps/idp-service"
+            }
+        },
+        "env-down": {
+            "executor": "nx:run-commands",
+            "outputs": [],
+            "options": {
+                "command": "docker-compose down",
+                "cwd": "apps/idp-service"
+            }
+        }
+    },
+    "tags": []
+}

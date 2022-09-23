@@ -8,6 +8,7 @@
         "core-frontend": "apps/core-frontend",
         "core-frontend-e2e": "apps/core-frontend-e2e",
         "core-graphql": "apps/core-graphql",
+        "idp-service": "apps/idp-service",
         "ui": "libs/ui"
     }
 }

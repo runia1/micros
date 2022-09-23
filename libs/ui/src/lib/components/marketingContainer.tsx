@@ -15,6 +15,19 @@ const StyledDiv = styled('div')`
     );
 `;
 
+const loginParams = {
+    client_id: 'foo',
+    redirect_uri: 'http://localhost:4200/authn/login-callback',
+    scope: 'openid',
+    response_type: 'id_token',
+    nonce: 'xyzABC123',
+    // state: '',
+};
+
+const oidcLoginLink = `http://localhost:3000/auth?${Object.entries(loginParams)
+    .map(([k, v]) => `${k}=${encodeURIComponent(v)}`)
+    .join('&')}`;
+
 export default function MarketingContainer({ children }: any) {
     return (
         <StyledDiv>
@@ -30,7 +43,7 @@ export default function MarketingContainer({ children }: any) {
                     >
                         Some Product Name
                     </Typography>
-                    <Link href="/login" passHref>
+                    <Link href={oidcLoginLink} passHref>
                         <Button
                             color="secondary"
                             disableElevation

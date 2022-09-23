@@ -30,16 +30,16 @@ export default function AppContainer(props: any) {
     const { children } = props;
     const [mobileOpen, setMobileOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const [showLoggedOutDialog, setShowLoggedOutDialog] = useState(false);
-    const user = useUserContext();
-    const router = useRouter();
-    useEffect(() => {
-        if (!user) {
-            setShowLoggedOutDialog(true);
-        } else {
-            setShowLoggedOutDialog(false);
-        }
-    }, [user]);
+    // const [showLoggedOutDialog, setShowLoggedOutDialog] = useState(false);
+    // const user = useUserContext();
+    // const router = useRouter();
+    // useEffect(() => {
+    //     if (!user) {
+    //         setShowLoggedOutDialog(true);
+    //     } else {
+    //         setShowLoggedOutDialog(false);
+    //     }
+    // }, [user]);
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -49,9 +49,9 @@ export default function AppContainer(props: any) {
         setAnchorEl(null);
     };
 
-    const handleLoginAndComeBack = () => {
-        router.replace(`/login?redirect=${router.pathname}`);
-    };
+    // const handleLoginAndComeBack = () => {
+    //     router.replace(`/login?redirect=${router.pathname}`);
+    // };
 
     const drawer = (
         <div>
@@ -73,7 +73,7 @@ export default function AppContainer(props: any) {
 
     return (
         <Box sx={{ display: 'flex' }}>
-            <Dialog
+            {/* <Dialog
                 open={showLoggedOutDialog}
                 aria-labelledby="responsive-dialog-title"
             >
@@ -91,7 +91,7 @@ export default function AppContainer(props: any) {
                         Log Back In
                     </Button>
                 </DialogActions>
-            </Dialog>
+            </Dialog> */}
             <AppBar
                 position="fixed"
                 sx={{
@@ -149,7 +149,8 @@ export default function AppContainer(props: any) {
                         </Link>
                         <MenuItem
                             onClick={() =>
-                                (window.location.href = '/api/logout')
+                                (window.location.href =
+                                    'http://localhost:3000/session/end')
                             }
                         >
                             Logout
