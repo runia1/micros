@@ -23,22 +23,22 @@ const consumable = new Set([
     'BackchannelAuthenticationRequest',
 ]);
 
-function grantKeyFor(id) {
+function grantKeyFor(id: string) {
     return `grant:${id}`;
 }
 
-function userCodeKeyFor(userCode) {
+function userCodeKeyFor(userCode: string) {
     return `userCode:${userCode}`;
 }
 
-function uidKeyFor(uid) {
+function uidKeyFor(uid: string) {
     return `uid:${uid}`;
 }
 
 export class RedisAdapter {
     constructor(protected readonly name: string) {}
 
-    async upsert(id, payload, expiresIn) {
+    async upsert(id: string, payload, expiresIn) {
         const key = this.key(id);
         const store = consumable.has(this.name)
             ? { payload: JSON.stringify(payload) }
@@ -78,7 +78,7 @@ export class RedisAdapter {
         await multi.exec();
     }
 
-    async find(id) {
+    async find(id: string) {
         const data = consumable.has(this.name)
             ? await client.hgetall(this.key(id))
             : await client.get(this.key(id));
@@ -97,22 +97,22 @@ export class RedisAdapter {
         };
     }
 
-    async findByUid(uid) {
+    async findByUid(uid: string) {
         const id = await client.get(uidKeyFor(uid));
         return this.find(id);
     }
 
-    async findByUserCode(userCode) {
+    async findByUserCode(userCode: string) {
         const id = await client.get(userCodeKeyFor(userCode));
         return this.find(id);
     }
 
-    async destroy(id) {
+    async destroy(id: string) {
         const key = this.key(id);
         await client.del(key);
     }
 
-    async revokeByGrantId(grantId) {
+    async revokeByGrantId(grantId: string) {
         // eslint-disable-line class-methods-use-this
         const multi = client.multi();
         const tokens = await client.lrange(grantKeyFor(grantId), 0, -1);
@@ -121,7 +121,7 @@ export class RedisAdapter {
         await multi.exec();
     }
 
-    async consume(id) {
+    async consume(id: string) {
         await client.hset(
             this.key(id),
             'consumed',
@@ -129,7 +129,7 @@ export class RedisAdapter {
         );
     }
 
-    key(id) {
+    key(id: string) {
         return `${this.name}:${id}`;
     }
 }

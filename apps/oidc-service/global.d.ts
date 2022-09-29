@@ -1,13 +1,14 @@
-import type { PrismaClient } from './generated/prisma-client';
+import type { JWKS } from 'oidc-provider';
 
 // Extend the NodeJS namespace with custom properties
 declare global {
-    var prisma: PrismaClient;
-
     namespace NodeJS {
         interface ProcessEnv {
             readonly NODE_ENV: 'development' | 'production';
-            readonly CLIENT_DATABASE_URL: string;
+            readonly POSTGRES_PASSWORD: string;
+            readonly JWKS: string;
+
+            readonly REDIS_URL: string;
         }
     }
 }

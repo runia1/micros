@@ -30,11 +30,15 @@
         "serve": {
             "executor": "@nrwl/node:node",
             "options": {
-                "buildTarget": "core-graphql:build"
+                "buildTarget": "core-graphql:build",
+                "port": 9229,
+                "runtimeArgs": ["--nolazy"]
             },
             "configurations": {
                 "production": {
-                    "buildTarget": "core-graphql:build:production"
+                    "buildTarget": "core-graphql:build:production",
+                    "inspect": false,
+                    "runtimeArgs": []
                 }
             }
         },

@@ -15,7 +15,6 @@ export function serverAuthExtractor(
     }
 
     return {
-        type: 'ServiceAuth',
         token: authHeader.substring(7),
     };
 }

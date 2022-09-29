@@ -16,7 +16,6 @@ export function browserAuthExtractor(
     }
 
     return {
-        type: 'BrowserAuth',
         token: cookies.token,
         refreshToken: cookies.refreshToken,
     };

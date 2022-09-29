@@ -1,5 +1,13 @@
 version: '3.6'
 services:
+    redis:
+        image: redis/redis-stack
+        ports:
+            - '6379:6379'
+            - '8001:8001'
+        volumes:
+            - redis-data:/data
+        restart: always
     postgres:
         image: postgres:14-alpine
         environment:
@@ -34,8 +42,9 @@ services:
 
 networks:
     default:
-        name: dev
+        name: idp-service
 
 volumes:
+    redis-data:
     postgres-data:
     pgadmin-data:

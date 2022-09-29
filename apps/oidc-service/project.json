@@ -1,25 +1,26 @@
 {
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "apps/idp-service/src",
+    "sourceRoot": "apps/oidc-service/src",
     "projectType": "application",
     "targets": {
         "build": {
             "executor": "@nrwl/node:webpack",
             "outputs": ["{options.outputPath}"],
             "options": {
-                "outputPath": "dist/apps/idp-service",
-                "main": "apps/idp-service/src/main.ts",
-                "tsConfig": "apps/idp-service/tsconfig.app.json"
+                "outputPath": "dist/apps/oidc-service",
+                "main": "apps/oidc-service/src/main.ts",
+                "tsConfig": "apps/oidc-service/tsconfig.app.json"
             },
             "configurations": {
                 "production": {
                     "optimization": true,
                     "extractLicenses": true,
                     "inspect": false,
+                    "deleteOutputPath": true,
                     "fileReplacements": [
                         {
-                            "replace": "apps/idp-service/src/environments/environment.ts",
-                            "with": "apps/idp-service/src/environments/environment.prod.ts"
+                            "replace": "apps/oidc-service/src/environments/environment.ts",
+                            "with": "apps/oidc-service/src/environments/environment.prod.ts"
                         }
                     ]
                 }
@@ -28,11 +29,13 @@
         "serve": {
             "executor": "@nrwl/node:node",
             "options": {
-                "buildTarget": "idp-service:build"
+                "buildTarget": "oidc-service:build",
+                "port": 9230
             },
             "configurations": {
                 "production": {
-                    "buildTarget": "idp-service:build:production"
+                    "buildTarget": "oidc-service:build:production",
+                    "inspect": false
                 }
             }
         },
@@ -40,14 +43,14 @@
             "executor": "@nrwl/linter:eslint",
             "outputs": ["{options.outputFile}"],
             "options": {
-                "lintFilePatterns": ["apps/idp-service/**/*.ts"]
+                "lintFilePatterns": ["apps/oidc-service/**/*.ts"]
             }
         },
         "test": {
             "executor": "@nrwl/jest:jest",
-            "outputs": ["coverage/apps/idp-service"],
+            "outputs": ["coverage/apps/oidc-service"],
             "options": {
-                "jestConfig": "apps/idp-service/jest.config.ts",
+                "jestConfig": "apps/oidc-service/jest.config.ts",
                 "passWithNoTests": true
             }
         },
@@ -56,7 +59,7 @@
             "outputs": [],
             "options": {
                 "command": "docker-compose up -d",
-                "cwd": "apps/idp-service"
+                "cwd": "apps/oidc-service"
             }
         },
         "env-down": {
@@ -64,7 +67,7 @@
             "outputs": [],
             "options": {
                 "command": "docker-compose down",
-                "cwd": "apps/idp-service"
+                "cwd": "apps/oidc-service"
             }
         }
     },
